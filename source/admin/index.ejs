@@ -47,17 +47,18 @@ public_folder: "source"
 collections: # A list of collections the CMS should be able to edit
   - name: "posts" # Used in routes, ie.: /admin/collections/:slug/edit
     label: "Post" # Used in the UI, ie.: "New Post"
-    folder: "source/_posts" # The path to the folder where the documents are stored
+    folder: "source/_posts/blog" # The path to the folder where the documents are stored
     sort: "date:desc"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     create: true # Allow users to create new documents in this collection
     fields: # The fields each document in this collection have
       - {label: "Title", name: "title", widget: "string", tagname: "h1"}
-      - {label: "Banner", name: "banner", widget: "image", class: "image featured"}
-      - {label: "Short Description", name: "shortdesc", widget: "string"}
+      - {label: "Thumbnail", name: "thumbnail", widget: "image", class: "image"}
       - {label: "Body", name: "body", widget: "markdown"}
     meta: # Meta data fields. Just like fields, but without any preview element
       - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Categories", name: "categories", widget: "string"}
+      - {label: "Categories", name: "categories", widget: "list"}
+      - {label: "Tags", name: "tags", widget: "list"}
       - {label: "Layout", name: "layout", widget: "hidden", default: "post"}
 
   </script>
@@ -66,12 +67,11 @@ collections: # A list of collections the CMS should be able to edit
         <div class="container">
             <!--Content-->
             <article class="box post">
-                {{#if entry.banner }}
-                {{cms-preview field='banner'}}
+                {{#if entry.thumbnail }}
+                {{cms-preview field='thumbnail'}}
                 {{/if}}
                 <header>
                     <h2>{{ entry.title }}</h2>
-                    <p>{{ entry.shortdesc}}</p>
                 </header>
                 {{cms-preview field='body'}}
             </article>
